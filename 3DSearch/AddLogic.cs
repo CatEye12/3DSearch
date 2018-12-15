@@ -19,24 +19,31 @@ namespace _3DSearch
         {
             try
             {
-                
-
-                using (dataContest = new SQLRepositoryDataContext(Properties.Settings.Default.SQLConnection1))
+                swApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application");
+                modelDoc = swApp?.ActiveDoc;
+                if (modelDoc != null)
                 {
-
-                    if (!dataContest.KindaRepositories.Any(x => x.Size1.Equals(newObject.Size1) && x.Size2.Equals(newObject.Size2) && x.Size3.Equals(newObject.Size3) 
-                    && x.DimVal1.Equals(newObject.DimVal1) && x.DimVal2.Equals(newObject.DimVal2) && x.DimVal3.Equals(newObject.DimVal3)))
+                    using (dataContest = new SQLRepositoryDataContext(Properties.Settings.Default.SQLConnection1))
                     {
-                        dataContest.KindaRepositories.InsertOnSubmit(newObject);
 
-                        dataContest.SubmitChanges(System.Data.Linq.ConflictMode.FailOnFirstConflict);
-                        dataContest.Refresh(System.Data.Linq.RefreshMode.KeepChanges);
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("Такая деталь уже есть в базе данных!");
-                    }
+                        if (!dataContest.KindaRepositories.Any(x => x.Size1.Equals(newObject.Size1) && x.Size2.Equals(newObject.Size2) && x.Size3.Equals(newObject.Size3)
+                        && x.DimVal1.Equals(newObject.DimVal1) && x.DimVal2.Equals(newObject.DimVal2) && x.DimVal3.Equals(newObject.DimVal3)))
+                        {
+                            dataContest.KindaRepositories.InsertOnSubmit(newObject);
 
+                            dataContest.SubmitChanges(System.Data.Linq.ConflictMode.FailOnFirstConflict);
+                            dataContest.Refresh(System.Data.Linq.RefreshMode.KeepChanges);
+                            System.Windows.Forms.MessageBox.Show("Сохранено");
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Такая деталь уже есть в базе данных!");
+                        }
+                    }
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Нету открытых документов. Откройте документ для сохранения.");
                 }
 
             }
@@ -64,7 +71,11 @@ namespace _3DSearch
                     Directory.CreateDirectory(Properties.Settings.Default.LocalPath);
 
                     bool saved =  modelDoc.Extension.SaveAs(Path.Combine(Properties.Settings.Default.LocalPath, name + ".SLDPRT"), 0, 0, null, ref errors, ref warnings);
-                    System.Windows.Forms.MessageBox.Show((swFileSaveError_e)errors + "   " + (swFileSaveWarning_e )warnings);
+                    if (errors != 0 || warnings != 0)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Не удалось сохранить деталь" + (swFileSaveError_e)errors + "   " + (swFileSaveWarning_e)warnings);
+                    }
+
                     return saved;
                 }
                 else
@@ -125,8 +136,5 @@ namespace _3DSearch
             }
             return modelBytes;
         }
-
-
-
     }
 }

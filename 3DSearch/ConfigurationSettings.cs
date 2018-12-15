@@ -53,7 +53,7 @@ namespace _3DSearch
             servName = parced[1].Split('=')[1];
             userName = parced[2].Split('=')[1];
             password = parced[3].Split('=')[1];
-            localPath = parced[4].Split('=')[1];
+            localPath = Settings.Default.LocalPath;
         }
     }
 }

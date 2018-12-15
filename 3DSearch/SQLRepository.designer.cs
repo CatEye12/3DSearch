@@ -82,21 +82,21 @@ namespace _3DSearch
 		
 		private int _Id;
 		
-		private int _Size1;
+		private decimal _Size1;
 		
-		private int _Size2;
+		private decimal _Size2;
 		
-		private int _Size3;
+		private decimal _Size3;
 		
 		private System.Data.Linq.Binary _Model;
 		
 		private string _Path;
 		
-		private int _DimVal1;
+		private decimal _DimVal1;
 		
-		private int _DimVal2;
+		private decimal _DimVal2;
 		
-		private int _DimVal3;
+		private decimal _DimVal3;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -104,21 +104,21 @@ namespace _3DSearch
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnSize1Changing(int value);
+    partial void OnSize1Changing(decimal value);
     partial void OnSize1Changed();
-    partial void OnSize2Changing(int value);
+    partial void OnSize2Changing(decimal value);
     partial void OnSize2Changed();
-    partial void OnSize3Changing(int value);
+    partial void OnSize3Changing(decimal value);
     partial void OnSize3Changed();
     partial void OnModelChanging(System.Data.Linq.Binary value);
     partial void OnModelChanged();
     partial void OnPathChanging(string value);
     partial void OnPathChanged();
-    partial void OnDimVal1Changing(int value);
+    partial void OnDimVal1Changing(decimal value);
     partial void OnDimVal1Changed();
-    partial void OnDimVal2Changing(int value);
+    partial void OnDimVal2Changing(decimal value);
     partial void OnDimVal2Changed();
-    partial void OnDimVal3Changing(int value);
+    partial void OnDimVal3Changing(decimal value);
     partial void OnDimVal3Changed();
     #endregion
 		
@@ -147,8 +147,8 @@ namespace _3DSearch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size1", DbType="Int NOT NULL")]
-		public int Size1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size1", DbType="Decimal(18,0) NOT NULL")]
+		public decimal Size1
 		{
 			get
 			{
@@ -167,8 +167,8 @@ namespace _3DSearch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size2", DbType="Int NOT NULL")]
-		public int Size2
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size2", DbType="Decimal(18,0) NOT NULL")]
+		public decimal Size2
 		{
 			get
 			{
@@ -187,8 +187,8 @@ namespace _3DSearch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size3", DbType="Int NOT NULL")]
-		public int Size3
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size3", DbType="Decimal(18,0) NOT NULL")]
+		public decimal Size3
 		{
 			get
 			{
@@ -247,8 +247,8 @@ namespace _3DSearch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimVal1", DbType="Int NOT NULL")]
-		public int DimVal1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimVal1", DbType="Decimal(18,0) NOT NULL")]
+		public decimal DimVal1
 		{
 			get
 			{
@@ -267,8 +267,8 @@ namespace _3DSearch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimVal2", DbType="Int NOT NULL")]
-		public int DimVal2
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimVal2", DbType="Decimal(18,0) NOT NULL")]
+		public decimal DimVal2
 		{
 			get
 			{
@@ -287,8 +287,8 @@ namespace _3DSearch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimVal3", DbType="Int NOT NULL")]
-		public int DimVal3
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimVal3", DbType="Decimal(18,0) NOT NULL")]
+		public decimal DimVal3
 		{
 			get
 			{

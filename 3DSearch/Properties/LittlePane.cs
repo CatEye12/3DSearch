@@ -9,7 +9,7 @@ namespace _3DSearch
     [ProgId(Loader.SWTASKPANE_PROGID)]
     public partial class LittlePane : UserControl
     {
-        static Add userAddControl = new Add();
+        static AddControl userAddControl = new AddControl();
         static AddFromFolders userAddFromFolderControl = new AddFromFolders();
         static ConfigurationControl userConfigurationControl = new ConfigurationControl();
         static Search userSerachControl = new Search();
@@ -51,6 +51,7 @@ namespace _3DSearch
 
         private void AddButton_Click(object sender, EventArgs e)
         {
+
             if (this.Controls.ContainsKey("Add"))
             {
                 this.Controls["Add"].Show();

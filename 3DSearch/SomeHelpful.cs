@@ -17,15 +17,40 @@ namespace _3DSearch.Controls
         /// <param name="p2">Среднее</param>
         /// <param name="p3">Наименьшее</param>
         /// <returns></returns>
-        public static SizeM OrderSize(int p1, int p2, int p3)
+        public static SizeM OrderSize(decimal p1, decimal p2, decimal p3)
         {
             SizeM point = new SizeM();
-            int[] values = new int[3] { p1, p2, p3 };
+            decimal[] values = new decimal[3] { p1, p2, p3 };
 
-
+            
             point.P1 = values.Max();
             point.P3 = values.Min();
-            point.P2 = values.Where(x => x != point.P1 && x != point.P3).First();
+
+            IEnumerable< decimal> middle = values.Where(x => x != point.P1 && x != point.P3).Select(x=>x);
+            if (middle.Count() == 0)
+            {
+                #region Если два размерных габарита совпадают
+                if (values[0] == values[1])
+                {
+                    point.P2 = values[0];
+                    return point;
+                }
+                else if (values[1] == values[2])
+                {
+                    point.P2 = values[1];
+                    return point;
+                }
+                else
+                {
+                    point.P2 = values[0];
+                    return point;
+                }
+                #endregion
+            }
+            else
+            {
+                point.P2 = middle.First();
+            }
 
             return point;
         }
@@ -33,14 +58,14 @@ namespace _3DSearch.Controls
 
     public class SizeM
     {
-        public int P1;
-        public int P2;
-        public int P3;
+        public decimal P1;
+        public decimal P2;
+        public decimal P3;
     }
 
     public class PointM
     {
-        public double LowerBound;
-        public double UpperBound;
+        public decimal LowerBound;
+        public decimal UpperBound;
     }
 }

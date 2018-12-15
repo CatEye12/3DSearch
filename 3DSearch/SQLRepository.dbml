@@ -3,14 +3,14 @@
   <Table Name="dbo.KindaRepository" Member="KindaRepositories">
     <Type Name="KindaRepository">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Size1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Size2" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Size3" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Size1" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Size2" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Size3" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
       <Column Name="Model" Type="System.Data.Linq.Binary" DbType="Image NOT NULL" CanBeNull="false" UpdateCheck="Never" />
       <Column Name="Path" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="DimVal1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DimVal2" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DimVal3" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DimVal1" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="DimVal2" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="DimVal3" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

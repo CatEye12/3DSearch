@@ -1,6 +1,6 @@
 ﻿namespace _3DSearch
 {
-    partial class Add
+    partial class AddControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -36,11 +36,9 @@
             this.buttonLocalSave = new System.Windows.Forms.Button();
             this.buttonRepoSave = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBoxDim4 = new System.Windows.Forms.TextBox();
             this.textBoxDim3 = new System.Windows.Forms.TextBox();
             this.textBoxDim2 = new System.Windows.Forms.TextBox();
             this.textBoxDim1 = new System.Windows.Forms.TextBox();
@@ -51,6 +49,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnOneMoreDiam2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,16 +65,15 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnOneMoreDiam2);
             this.groupBox1.Controls.Add(this.textBoxPartName);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.buttonLocalSave);
             this.groupBox1.Controls.Add(this.buttonRepoSave);
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textBoxDim4);
             this.groupBox1.Controls.Add(this.textBoxDim3);
             this.groupBox1.Controls.Add(this.textBoxDim2);
             this.groupBox1.Controls.Add(this.textBoxDim1);
@@ -138,16 +136,6 @@
             this.button1.Text = "+";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(16, 329);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 17);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Диам. вала 4";
-            this.label7.Visible = false;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -176,14 +164,6 @@
             this.label4.Size = new System.Drawing.Size(89, 17);
             this.label4.TabIndex = 15;
             this.label4.Text = "Диам. вала 1";
-            // 
-            // textBoxDim4
-            // 
-            this.textBoxDim4.Location = new System.Drawing.Point(127, 321);
-            this.textBoxDim4.Name = "textBoxDim4";
-            this.textBoxDim4.Size = new System.Drawing.Size(100, 25);
-            this.textBoxDim4.TabIndex = 14;
-            this.textBoxDim4.Visible = false;
             // 
             // textBoxDim3
             // 
@@ -256,6 +236,16 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Длина";
             // 
+            // btnOneMoreDiam2
+            // 
+            this.btnOneMoreDiam2.Location = new System.Drawing.Point(235, 209);
+            this.btnOneMoreDiam2.Name = "btnOneMoreDiam2";
+            this.btnOneMoreDiam2.Size = new System.Drawing.Size(23, 23);
+            this.btnOneMoreDiam2.TabIndex = 23;
+            this.btnOneMoreDiam2.Text = "+";
+            this.btnOneMoreDiam2.UseVisualStyleBackColor = true;
+            this.btnOneMoreDiam2.Click += new System.EventHandler(this.btnOneMoreDiam2_Click);
+            // 
             // Add
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -277,11 +267,9 @@
         private System.Windows.Forms.Button buttonLocalSave;
         private System.Windows.Forms.Button buttonRepoSave;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxDim4;
         private System.Windows.Forms.TextBox textBoxDim3;
         private System.Windows.Forms.TextBox textBoxDim2;
         private System.Windows.Forms.TextBox textBoxDim1;
@@ -294,5 +282,6 @@
         private System.Windows.Forms.TextBox textBoxPartName;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnOneMoreDiam2;
     }
 }
