@@ -29,7 +29,7 @@ namespace _3DSearch
                 }
                 else
                 {
-                    MessageBox.Show("From else "  + littleInstance.GetHashCode().ToString());
+                    //MessageBox.Show("From else "  + littleInstance.GetHashCode().ToString());
                     return littleInstance;
                 }
             }
@@ -38,16 +38,11 @@ namespace _3DSearch
         public LittlePane()
         {
             InitializeComponent();
-            //this.Size = new Size(270, 800);
             this.Dock = DockStyle.Fill;
             this.BackColor = Color.Bisque;
+            //ConfigurationSettings load = new ConfigurationSettings();
         }
-        
 
-        public void MainMenuShow()
-        {
-            Controls.Clear();
-        }
 
         private void AddButton_Click(object sender, EventArgs e)
         {

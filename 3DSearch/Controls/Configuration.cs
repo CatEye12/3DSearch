@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace _3DSearch
@@ -22,8 +15,22 @@ namespace _3DSearch
         public ConfigurationControl()
         {
             InitializeComponent();
-            ConfigurationSettings.ReturnSettings(ref baseName, ref servName, ref userName, ref password, ref localPath);
+            ConfigurationSettings.NewMethod();
+            //ConfigurationSettings.ReturnSettings(ref baseName, ref servName, ref userName, ref password, ref localPath);
             FillFormWithDefault();
+        }
+
+        
+        private void buttonCheckConnection_Click(object sender, EventArgs e)
+        {
+            if (ConfigurationSettings.IsServerConnected())
+            {
+                MessageBox.Show("Подключение прошло успешно.");
+            }
+            else
+            {
+                MessageBox.Show("Не удалось подключиться к серверу!");
+            }
         }
 
         private void menuBack_Click(object sender, EventArgs e)
@@ -37,12 +44,12 @@ namespace _3DSearch
             {
                 ConfigurationSettings newSettings = new ConfigurationSettings();
 
-                newSettings.BaseName = textBoxBaseName.Text;
-                newSettings.ServName = textBoxServName.Text;
-                newSettings.UserName = textBoxUserName.Text;
-                newSettings.Password = textBoxPassword.Text;
-                newSettings.LocalPath = textBoxLocalPath.Text;
-                newSettings.UpdateConfigurationString(newSettings);
+                ConfigurationSettings.BaseName = textBoxBaseName.Text;
+                ConfigurationSettings.ServName = textBoxServName.Text;
+                ConfigurationSettings.UserName = textBoxUserName.Text;
+                ConfigurationSettings.Password = textBoxPassword.Text;
+                ConfigurationSettings.LocalPath = textBoxLocalPath.Text;
+                newSettings.UpdateConfigurationString();
             }
             else
             {

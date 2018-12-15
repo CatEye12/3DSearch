@@ -62,7 +62,7 @@ namespace _3DSearch
 
             List<SearchModel> showable;
 
-            using (dataSearch = new SQLRepositoryDataContext(Properties.Settings.Default.SQLConnection1))
+            using (dataSearch = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
             {
                 showable = new List<SearchModel>();
 
@@ -137,7 +137,7 @@ namespace _3DSearch
 
 
 
-            using (dataSearch = new SQLRepositoryDataContext(Properties.Settings.Default.SQLConnection1))
+            using (dataSearch = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
             {
                 var table = dataSearch.KindaRepositories.ToList();
 
@@ -243,8 +243,8 @@ namespace _3DSearch
 
             try
             {
-                File.WriteAllBytes(Properties.Settings.Default.LocalPath + @"\" + newName + ".SLDPRT", bytes);
-                Process.Start(Properties.Settings.Default.LocalPath + @"\" + newName + ".SLDPRT");
+                File.WriteAllBytes(ConfigurationSettings.LocalPath + @"\" + newName + ".SLDPRT", bytes);
+                Process.Start(ConfigurationSettings.LocalPath + @"\" + newName + ".SLDPRT");
 
             }
             catch (Exception ex)
@@ -260,7 +260,7 @@ namespace _3DSearch
             byte[] bytes = new byte[] { };
 
             
-            using (dataSearch = new SQLRepositoryDataContext(Properties.Settings.Default.SQLConnection1))
+            using (dataSearch = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
             {
 
                var b = dataSearch.KindaRepositories.Where(x => x.Id == ID).Select(x=>x.Model).First();
@@ -277,7 +277,7 @@ namespace _3DSearch
 
 
 
-            using (dataSearch = new SQLRepositoryDataContext(Properties.Settings.Default.SQLConnection1))
+            using (dataSearch = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
             {
 
                 path = dataSearch.KindaRepositories.Where(x => x.Id == ID).Select(x => x.Path).First();

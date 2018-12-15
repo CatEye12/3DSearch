@@ -40,6 +40,7 @@
             this.buttonSaveConfiguration = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxLocalPath = new System.Windows.Forms.TextBox();
+            this.buttonCheckConnection = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // menuBack
@@ -118,9 +119,9 @@
             // 
             // buttonSaveConfiguration
             // 
-            this.buttonSaveConfiguration.Location = new System.Drawing.Point(138, 203);
+            this.buttonSaveConfiguration.Location = new System.Drawing.Point(24, 244);
             this.buttonSaveConfiguration.Name = "buttonSaveConfiguration";
-            this.buttonSaveConfiguration.Size = new System.Drawing.Size(76, 29);
+            this.buttonSaveConfiguration.Size = new System.Drawing.Size(149, 29);
             this.buttonSaveConfiguration.TabIndex = 4;
             this.buttonSaveConfiguration.Text = "Сохранить";
             this.buttonSaveConfiguration.UseVisualStyleBackColor = true;
@@ -142,10 +143,21 @@
             this.textBoxLocalPath.Size = new System.Drawing.Size(105, 20);
             this.textBoxLocalPath.TabIndex = 3;
             // 
+            // buttonCheckConnection
+            // 
+            this.buttonCheckConnection.Location = new System.Drawing.Point(24, 209);
+            this.buttonCheckConnection.Name = "buttonCheckConnection";
+            this.buttonCheckConnection.Size = new System.Drawing.Size(149, 29);
+            this.buttonCheckConnection.TabIndex = 5;
+            this.buttonCheckConnection.Text = "Проверка подключения";
+            this.buttonCheckConnection.UseVisualStyleBackColor = true;
+            this.buttonCheckConnection.Click += new System.EventHandler(this.buttonCheckConnection_Click);
+            // 
             // ConfigurationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonCheckConnection);
             this.Controls.Add(this.buttonSaveConfiguration);
             this.Controls.Add(this.textBoxUserName);
             this.Controls.Add(this.textBoxLocalPath);
@@ -179,5 +191,6 @@
         private System.Windows.Forms.Button buttonSaveConfiguration;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxLocalPath;
+        private System.Windows.Forms.Button buttonCheckConnection;
     }
 }

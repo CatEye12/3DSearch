@@ -61,7 +61,7 @@ namespace _3DSearch
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            SQLRepositoryDataContext da = new SQLRepositoryDataContext(Properties.Settings.Default.SQLConnection1);
+            SQLRepositoryDataContext da = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1);
             List<SearchModel> fillTable = new List<SearchModel>();
             search = new SearchModel();
 

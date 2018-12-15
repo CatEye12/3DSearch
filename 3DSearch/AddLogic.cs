@@ -23,7 +23,7 @@ namespace _3DSearch
                 modelDoc = swApp?.ActiveDoc;
                 if (modelDoc != null)
                 {
-                    using (dataContest = new SQLRepositoryDataContext(Properties.Settings.Default.SQLConnection1))
+                    using (dataContest = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
                     {
 
                         if (!dataContest.KindaRepositories.Any(x => x.Size1.Equals(newObject.Size1) && x.Size2.Equals(newObject.Size2) && x.Size3.Equals(newObject.Size3)
@@ -68,9 +68,9 @@ namespace _3DSearch
 
                 if (modelDoc != null)
                 {
-                    Directory.CreateDirectory(Properties.Settings.Default.LocalPath);
+                    Directory.CreateDirectory(ConfigurationSettings.LocalPath);
 
-                    bool saved =  modelDoc.Extension.SaveAs(Path.Combine(Properties.Settings.Default.LocalPath, name + ".SLDPRT"), 0, 0, null, ref errors, ref warnings);
+                    bool saved =  modelDoc.Extension.SaveAs(Path.Combine(ConfigurationSettings.LocalPath, name + ".SLDPRT"), 0, 0, null, ref errors, ref warnings);
                     if (errors != 0 || warnings != 0)
                     {
                         System.Windows.Forms.MessageBox.Show("Не удалось сохранить деталь" + (swFileSaveError_e)errors + "   " + (swFileSaveWarning_e)warnings);

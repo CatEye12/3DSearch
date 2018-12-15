@@ -23,28 +23,6 @@ namespace _3DSearch.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=pdmsrv ;Initial Catalog=SwPlusDB; User ID=airventscad;Password=1;Trus" +
-            "tServerCertificate=True")]
-        public string SQLConnection1 {
-            get {
-                return ((string)(this["SQLConnection1"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=pdmsrv;Initial Catalog=SWPlusDB;User ID=airventscad;Password=1;TrustS" +
-            "erverCertificate=True")]
-        public string SWPlusDBConnectionString {
-            get {
-                return ((string)(this["SWPlusDBConnectionString"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("D:\\Parts")]
@@ -54,6 +32,28 @@ namespace _3DSearch.Properties {
             }
             set {
                 this["LocalPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=pdmsrv;Initial Catalog=SwPlusDB; User ID=airventscad;Password=1;Trust" +
+            "ServerCertificate=True")]
+        public string SQLConnection1 {
+            get {
+                return ((string)(this["SQLConnection1"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=pdmsrv;Initial Catalog=SWPlusDB;User ID=airventscad;TrustServerCertif" +
+            "icate=True")]
+        public string SWPlusDBConnectionString {
+            get {
+                return ((string)(this["SWPlusDBConnectionString"]));
             }
         }
     }
