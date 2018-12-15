@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SWPlusDB" Class="SQLRepositoryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=pdmsrv;Initial Catalog=SWPlusDB;User ID=airventscad;TrustServerCertificate=True" SettingsObjectName="_3DSearch.Properties.Settings" SettingsPropertyName="SWPlusDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.KindaRepository" Member="KindaRepositories">
+    <Type Name="KindaRepository">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Size1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Size2" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Size3" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Model" Type="System.Data.Linq.Binary" DbType="Image NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Path" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DimVal1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DimVal2" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DimVal3" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
