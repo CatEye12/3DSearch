@@ -23,15 +23,12 @@ namespace _3DSearch.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("D:\\Parts")]
         public string LocalPath {
             get {
                 return ((string)(this["LocalPath"]));
-            }
-            set {
-                this["LocalPath"] = value;
             }
         }
         
@@ -43,17 +40,6 @@ namespace _3DSearch.Properties {
         public string SQLConnection1 {
             get {
                 return ((string)(this["SQLConnection1"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=pdmsrv;Initial Catalog=SWPlusDB;User ID=airventscad;TrustServerCertif" +
-            "icate=True")]
-        public string SWPlusDBConnectionString {
-            get {
-                return ((string)(this["SWPlusDBConnectionString"]));
             }
         }
     }

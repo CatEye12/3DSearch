@@ -40,7 +40,7 @@ namespace _3DSearch
             InitializeComponent();
             this.Dock = DockStyle.Fill;
             this.BackColor = Color.Bisque;
-            //ConfigurationSettings load = new ConfigurationSettings();
+            this.Resize += LittlePane_Resize;
         }
 
 
@@ -63,18 +63,18 @@ namespace _3DSearch
 
         private void AddFileFromFolderButton_Click(object sender, EventArgs e)
         {
-            if (this.Controls.ContainsKey("AddFromFolder"))
-            {
-                this.Controls["AddFromFolder"].Show();
-            }
-            else
-            {
-                userAddFromFolderControl.BackColor = Color.PaleVioletRed;
-                userAddFromFolderControl.Name = "AddFromFolder";
-                userAddFromFolderControl.Size = this.Size;
-                this.Controls.Add(userAddFromFolderControl);
-                this.Controls["AddFromFolder"].BringToFront();
-            }
+            //if (this.Controls.ContainsKey("AddFromFolder"))
+            //{
+            //    this.Controls["AddFromFolder"].Show();
+            //}
+            //else
+            //{
+            //    userAddFromFolderControl.BackColor = Color.PaleVioletRed;
+            //    userAddFromFolderControl.Name = "AddFromFolder";
+            //    userAddFromFolderControl.Size = this.Size;
+            //    this.Controls.Add(userAddFromFolderControl);
+            //    this.Controls["AddFromFolder"].BringToFront();
+            //}
         }
 
         private void SearchButton_Click(object sender, EventArgs e)
@@ -91,6 +91,14 @@ namespace _3DSearch
                 this.Controls.Add(userSerachControl);
                 this.Controls["Search"].BringToFront();
             }
+        }
+
+        private void LittlePane_Resize(object sender, EventArgs e)
+        {
+            userAddControl.Size = this.Size;
+            userAddFromFolderControl.Size = this.Size;
+            userConfigurationControl.Size = this.Size;
+            userSerachControl.Size = this.Size;
         }
 
         private void ConfigurationButton_Click(object sender, EventArgs e)

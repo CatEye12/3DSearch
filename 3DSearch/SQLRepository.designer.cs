@@ -36,7 +36,7 @@ namespace _3DSearch
     #endregion
 		
 		public SQLRepositoryDataContext() : 
-				base(global::_3DSearch.ConfigurationSettings.SQLConnection1, mappingSource)
+				base(global::_3DSearch.Properties.Settings.Default.SQLConnection1, mappingSource)
 		{
 			OnCreated();
 		}

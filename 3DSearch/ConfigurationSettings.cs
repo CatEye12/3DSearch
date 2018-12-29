@@ -11,6 +11,7 @@ namespace _3DSearch
         public static string UserName = string.Empty;
         public static string Password = string.Empty;
 
+
         public static string LocalPath = string.Empty;
         public static string SQLConnection1 = string.Empty;
 
@@ -30,22 +31,20 @@ namespace _3DSearch
                 fileMap.ExeConfigFilename = configExe;
                 Configuration conf = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-                SQLConnection1 = conf.AppSettings.Settings["SQLConnection1"]?.Value == null ? string.Empty : conf.AppSettings.Settings["SQLConnection1"]?.Value;
+                SQLConnection1 = conf.ConnectionStrings.ConnectionStrings["_3DSearch.Properties.Settings.SQLConnection1"] == null ? string.Empty : conf.ConnectionStrings.ConnectionStrings["_3DSearch.Properties.Settings.SQLConnection1"].ToString();
 
-
-                LocalPath = conf.AppSettings.Settings["LocalPath"]?.Value == null ? string.Empty : conf.AppSettings.Settings["LocalPath"]?.Value;
-                
+                ClientSettingsSection localPathSect = (ClientSettingsSection)conf.SectionGroups["applicationSettings"].Sections["_3DSearch.Properties.Settings"];
+                LocalPath = localPathSect.Settings.Get("LocalPath").Value.ValueXml.InnerText;
             }
         }
 
         public void UpdateConfigurationString()
         {
-            string s = @"Data Source = " + ConfigurationSettings.ServName + "; Initial Catalog = " + ConfigurationSettings.BaseName + "; User ID = " + ConfigurationSettings.UserName + "; Password = " + ConfigurationSettings.Password + "; TrustServerCertificate = True";
+            string s = @"Data Source =" + ConfigurationSettings.ServName + "; Initial Catalog =" + ConfigurationSettings.BaseName + "; User ID =" + ConfigurationSettings.UserName + "; Password =" + ConfigurationSettings.Password + "; TrustServerCertificate = True";
 
             string configExe = Environment.CurrentDirectory + "\\3DSearch.dll.config";
             try
             {
-
 
                 if (System.IO.File.Exists(configExe))
                 {
@@ -53,19 +52,11 @@ namespace _3DSearch
                     fileMap.ExeConfigFilename = configExe;
                     Configuration conf = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-                    conf.AppSettings.Settings.Remove("SQLConnection1");
-                    conf.AppSettings.Settings.Remove("SWPlusDBConnectionString");
-                    conf.AppSettings.Settings.Remove("LocalPath");
-                    conf.AppSettings.Settings.Remove("_3DSearch.Properties.Settings.SQLConnection1");
-                    conf.AppSettings.Settings.Remove("_3DSearch.Properties.Settings.SWPlusDBConnectionString");
 
-                    //_3DSearch.Properties.Settings.SQLConnection1
-                    conf.AppSettings.Settings.Add("SQLConnection1", s);
-                    conf.AppSettings.Settings.Add("SWPlusDBConnectionString", s);
-                    conf.AppSettings.Settings.Add("LocalPath", ConfigurationSettings.LocalPath);
+                    conf.ConnectionStrings.ConnectionStrings["_3DSearch.Properties.Settings.SQLConnection1"].ConnectionString = s;
+                    ClientSettingsSection localPathSect = (ClientSettingsSection)conf.SectionGroups["applicationSettings"].Sections["_3DSearch.Properties.Settings"];
+                    localPathSect.Settings.Get("LocalPath").Value.ValueXml.InnerText = ConfigurationSettings.LocalPath;
 
-                    conf.AppSettings.Settings.Add("_3DSearch.Properties.Settings.SQLConnection1", s);
-                    conf.AppSettings.Settings.Add("_3DSearch.Properties.Settings.SWPlusDBConnectionString", s);
                     conf.Save(ConfigurationSaveMode.Full);
 
                     NewMethod();
@@ -89,10 +80,20 @@ namespace _3DSearch
 
 
                 baseName = parced[0].Split('=')[1];
+                    if (baseName.Contains(" ")) { baseName.Replace(' ', (char)0); }
+
                 servName = parced[1].Split('=')[1];
+                    if (servName.Contains(" ")) { servName.Replace(' ', (char)0); }
+
+
                 userName = parced[2].Split('=')[1];
+                    if (userName.Contains(" ")) { userName.Replace(' ', (char)0); }
+
                 password = parced[3].Split('=')[1];
+                    if (password.Contains(" ")) { password.Replace(' ', (char)0); }
+
                 localPath = ConfigurationSettings.LocalPath;
+                    if (localPath.Contains(" ")) { localPath.Replace(' ', (char)0); }
             }
         }
 
@@ -100,19 +101,26 @@ namespace _3DSearch
         {
             using (var l_oConnection = new SqlConnection(ConfigurationSettings.SQLConnection1))
             {
-                try
+                if (l_oConnection != null)
                 {
-                    l_oConnection.Open();
-                    return true;
+                    try
+                    {
+                        l_oConnection.Open();
+                        return true;
+                    }
+                    catch (SqlException ex)
+                    {
+                        return false;
+                    }
+                    finally
+                    {
+                        l_oConnection.Dispose();
+                    }
                 }
-                catch (SqlException ex)
+                else
                 {
-                    System.Windows.Forms.MessageBox.Show(ex.Message);
+                    System.Windows.Forms.MessageBox.Show("Не удалось получить доступ к базе данных. Проверте строку подключения и сетевые настройки");
                     return false;
-                }
-                finally
-                {
-                    l_oConnection.Dispose();
                 }
             }
         }

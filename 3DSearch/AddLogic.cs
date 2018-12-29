@@ -25,19 +25,25 @@ namespace _3DSearch
                 {
                     using (dataContest = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
                     {
-
-                        if (!dataContest.KindaRepositories.Any(x => x.Size1.Equals(newObject.Size1) && x.Size2.Equals(newObject.Size2) && x.Size3.Equals(newObject.Size3)
-                        && x.DimVal1.Equals(newObject.DimVal1) && x.DimVal2.Equals(newObject.DimVal2) && x.DimVal3.Equals(newObject.DimVal3)))
+                        if (dataContest != null)
                         {
-                            dataContest.KindaRepositories.InsertOnSubmit(newObject);
+                            if (!dataContest.KindaRepositories.Any(x => x.Size1.Equals(newObject.Size1) && x.Size2.Equals(newObject.Size2) && x.Size3.Equals(newObject.Size3)
+                          && x.DimVal1.Equals(newObject.DimVal1) && x.DimVal2.Equals(newObject.DimVal2) && x.DimVal3.Equals(newObject.DimVal3)))
+                            {
+                                dataContest.KindaRepositories.InsertOnSubmit(newObject);
 
-                            dataContest.SubmitChanges(System.Data.Linq.ConflictMode.FailOnFirstConflict);
-                            dataContest.Refresh(System.Data.Linq.RefreshMode.KeepChanges);
-                            System.Windows.Forms.MessageBox.Show("Сохранено");
+                                dataContest.SubmitChanges(System.Data.Linq.ConflictMode.FailOnFirstConflict);
+                                dataContest.Refresh(System.Data.Linq.RefreshMode.KeepChanges);
+                                System.Windows.Forms.MessageBox.Show("Сохранено!");
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("Такая деталь уже есть в базе данных!");
+                            }
                         }
                         else
                         {
-                            System.Windows.Forms.MessageBox.Show("Такая деталь уже есть в базе данных!");
+                            System.Windows.Forms.MessageBox.Show("Не удалось установить подключение к базе даных. Проверте строку подключения и настройки сети!");
                         }
                     }
                 }
@@ -50,7 +56,6 @@ namespace _3DSearch
             catch (System.Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
-                throw ex;
             }
         }
 

@@ -46,17 +46,19 @@
             // 
             // AddFileFromFolderButton
             // 
-            this.AddFileFromFolderButton.Location = new System.Drawing.Point(20, 80);
+            this.AddFileFromFolderButton.Enabled = false;
+            this.AddFileFromFolderButton.Location = new System.Drawing.Point(20, 249);
             this.AddFileFromFolderButton.Name = "AddFileFromFolderButton";
             this.AddFileFromFolderButton.Size = new System.Drawing.Size(116, 28);
             this.AddFileFromFolderButton.TabIndex = 1;
             this.AddFileFromFolderButton.Text = "AddFileFromFolder";
             this.AddFileFromFolderButton.UseVisualStyleBackColor = true;
+            this.AddFileFromFolderButton.Visible = false;
             this.AddFileFromFolderButton.Click += new System.EventHandler(this.AddFileFromFolderButton_Click);
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(20, 131);
+            this.SearchButton.Location = new System.Drawing.Point(20, 80);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(116, 28);
             this.SearchButton.TabIndex = 2;
@@ -66,7 +68,7 @@
             // 
             // ConfigurationButton
             // 
-            this.ConfigurationButton.Location = new System.Drawing.Point(20, 182);
+            this.ConfigurationButton.Location = new System.Drawing.Point(20, 131);
             this.ConfigurationButton.Name = "ConfigurationButton";
             this.ConfigurationButton.Size = new System.Drawing.Size(116, 28);
             this.ConfigurationButton.TabIndex = 3;

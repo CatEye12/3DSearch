@@ -31,11 +31,11 @@
             this.components = new System.ComponentModel.Container();
             this.menuBack = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnOneMoreDiam2 = new System.Windows.Forms.Button();
             this.textBoxPartName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.buttonLocalSave = new System.Windows.Forms.Button();
             this.buttonRepoSave = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -49,7 +49,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnOneMoreDiam2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,7 +69,6 @@
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.buttonLocalSave);
             this.groupBox1.Controls.Add(this.buttonRepoSave);
-            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -84,12 +82,22 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(3, 58);
+            this.groupBox1.Location = new System.Drawing.Point(0, 60);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(264, 725);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Параметры детали";
+            // 
+            // btnOneMoreDiam2
+            // 
+            this.btnOneMoreDiam2.Location = new System.Drawing.Point(235, 209);
+            this.btnOneMoreDiam2.Name = "btnOneMoreDiam2";
+            this.btnOneMoreDiam2.Size = new System.Drawing.Size(23, 23);
+            this.btnOneMoreDiam2.TabIndex = 23;
+            this.btnOneMoreDiam2.Text = "+";
+            this.btnOneMoreDiam2.UseVisualStyleBackColor = true;
+            this.btnOneMoreDiam2.Click += new System.EventHandler(this.btnOneMoreDiam2_Click);
             // 
             // textBoxPartName
             // 
@@ -109,7 +117,7 @@
             // 
             // buttonLocalSave
             // 
-            this.buttonLocalSave.Location = new System.Drawing.Point(19, 393);
+            this.buttonLocalSave.Location = new System.Drawing.Point(19, 245);
             this.buttonLocalSave.Name = "buttonLocalSave";
             this.buttonLocalSave.Size = new System.Drawing.Size(179, 33);
             this.buttonLocalSave.TabIndex = 20;
@@ -119,22 +127,13 @@
             // 
             // buttonRepoSave
             // 
-            this.buttonRepoSave.Location = new System.Drawing.Point(19, 432);
+            this.buttonRepoSave.Location = new System.Drawing.Point(19, 284);
             this.buttonRepoSave.Name = "buttonRepoSave";
             this.buttonRepoSave.Size = new System.Drawing.Size(179, 34);
             this.buttonRepoSave.TabIndex = 19;
             this.buttonRepoSave.Text = "Сохранить в репозиторий";
             this.buttonRepoSave.UseVisualStyleBackColor = true;
             this.buttonRepoSave.Click += new System.EventHandler(this.buttonRepoSave_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(204, 393);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(23, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "+";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -236,23 +235,13 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Длина";
             // 
-            // btnOneMoreDiam2
-            // 
-            this.btnOneMoreDiam2.Location = new System.Drawing.Point(235, 209);
-            this.btnOneMoreDiam2.Name = "btnOneMoreDiam2";
-            this.btnOneMoreDiam2.Size = new System.Drawing.Size(23, 23);
-            this.btnOneMoreDiam2.TabIndex = 23;
-            this.btnOneMoreDiam2.Text = "+";
-            this.btnOneMoreDiam2.UseVisualStyleBackColor = true;
-            this.btnOneMoreDiam2.Click += new System.EventHandler(this.btnOneMoreDiam2_Click);
-            // 
-            // Add
+            // AddControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuBack);
-            this.Name = "Add";
+            this.Name = "AddControl";
             this.Size = new System.Drawing.Size(1396, 800);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -263,10 +252,8 @@
         #endregion
 
         private System.Windows.Forms.Button menuBack;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button buttonLocalSave;
         private System.Windows.Forms.Button buttonRepoSave;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -283,5 +270,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnOneMoreDiam2;
+        public System.Windows.Forms.GroupBox groupBox1;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Data.Linq;
 using System.Collections.Generic;
 
 namespace _3DSearch
@@ -9,16 +8,24 @@ namespace _3DSearch
     {
         SQLRepositoryDataContext da = new SQLRepositoryDataContext();
         SearchModel search;
-        SearchModel wasSelected;
+        SearchModel wasSelected = null;
         int percents = 10;
         
 
         public Search()
         {
             InitializeComponent();
-            dataGridViewSearchResult.Size = new System.Drawing.Size(this.Size.Width, 250);
-            comboBoxPercents.DataSource = new int[] { 0, 10, 20, 30 ,40, 50 ,60 ,70 ,80 ,90, 100};
-            comboBoxPercents.SelectedIndex = 0;
+            this.Resize += Search_Resize;
+            dataGridViewSearchResult.Size = new System.Drawing.Size(this.Size.Width - 5, 250);
+            dataGridViewSearchResult.BackgroundColor = this.BackColor;
+            comboBoxPercents.DataSource = new int[] { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+            comboBoxPercents.SelectedIndex = 8;
+        }
+
+
+        private void Search_Resize(object sender, EventArgs e)
+        {
+            dataGridViewSearchResult.Size = new System.Drawing.Size(this.Size.Width - 5, 250);
         }
 
         private void menuBack_Click(object sender, EventArgs e)
@@ -34,7 +41,7 @@ namespace _3DSearch
                 search.Size2 = Convert.ToDecimal(textBoxHeight.Text);
                 search.Size3 = Convert.ToDecimal(textBoxLength.Text);
                 percents = Convert.ToInt32( comboBoxPercents.Text);
-                MessageBox.Show(percents.ToString());
+
                 if (!checkBoxMainParams.Checked)
                 {
                     search.DimVal1 = string.IsNullOrEmpty(textBoxD1.Text) ? 0 : Convert.ToDecimal(textBoxD1.Text);
@@ -56,12 +63,11 @@ namespace _3DSearch
                 MessageBox.Show("Введены некорекктные параметры");
                 return false;
             }
-
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            SQLRepositoryDataContext da = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1);
+
             List<SearchModel> fillTable = new List<SearchModel>();
             search = new SearchModel();
 
@@ -79,9 +85,18 @@ namespace _3DSearch
             dataGridViewSearchResult.DataSource = fillTable;
             dataGridViewSearchResult.Columns[0].Visible = false;
 
-           // dataGridViewSearchResult.Height = ResizeDataGridView();
+            dataGridViewSearchResult.Height = ResizeDataGridView();
         }
 
+        private int ResizeDataGridView()
+        {
+            int quantity = dataGridViewSearchResult.Rows.Count;
+            int rowHeight =  dataGridViewSearchResult.Rows.GetRowsHeight(DataGridViewElementStates.Displayed);
+
+            if (quantity < 1) return dataGridViewSearchResult.ColumnHeadersHeight;
+
+            return quantity * rowHeight + dataGridViewSearchResult.ColumnHeadersHeight+10;
+        }
 
 
 
@@ -92,6 +107,9 @@ namespace _3DSearch
                 textBoxHeight.Enabled = false;
                 textBoxLength.Enabled = false;
                 textBoxWidth.Enabled = false;
+                textBoxD1.Enabled = false;
+                textBoxD2.Enabled = false;
+                textBoxD3.Enabled = false;
                 comboBoxPercents.Enabled = false;
             }
             else
@@ -99,19 +117,13 @@ namespace _3DSearch
                 textBoxHeight.Enabled = true;
                 textBoxLength.Enabled = true;
                 textBoxWidth.Enabled = true;
+                textBoxD1.Enabled = true;
+                textBoxD2.Enabled = true;
+                textBoxD3.Enabled = true;
                 comboBoxPercents.Enabled = true;
             }
         }
 
-        private int ResizeDataGridView()
-        {
-            int quantity = dataGridViewSearchResult.Rows.Count;
-            int count =  dataGridViewSearchResult.Rows.GetRowsHeight(DataGridViewElementStates.Displayed);
-
-            if (quantity < 1) return dataGridViewSearchResult.ColumnHeadersHeight;
-
-            return quantity * count;
-        }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -120,9 +132,16 @@ namespace _3DSearch
                 textBoxD1.Enabled = false;
                 textBoxD2.Enabled = false;
                 textBoxD3.Enabled = false;
+                textBoxD1.BackColor = System.Drawing.Color.DimGray;
+                textBoxD2.BackColor = System.Drawing.Color.DimGray;
+                textBoxD3.BackColor = System.Drawing.Color.DimGray;
             }
             else
             {
+                textBoxD1.BackColor = System.Drawing.Color.Empty;
+                textBoxD2.BackColor = System.Drawing.Color.Empty;
+                textBoxD3.BackColor = System.Drawing.Color.Empty;
+
                 textBoxD1.Enabled = true ;
                 textBoxD2.Enabled = true;
                 textBoxD3.Enabled = true;
@@ -131,22 +150,31 @@ namespace _3DSearch
 
         private void dataGridViewSearchResult_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show(e.ColumnIndex.ToString() + "  " + e.RowIndex.ToString());
-
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 )
             {
                 try
                 {
                     wasSelected = (SearchModel)dataGridViewSearchResult.Rows.SharedRow(e.RowIndex).DataBoundItem;
-
-                    search.GetPartFromDB(wasSelected);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+            if (wasSelected != null)
+            {
+                search.GetPartFromDB(wasSelected);
+                wasSelected = null;
+            }
+            else
+            {
+                MessageBox.Show("Выберите деталь из таблицы");
+            }
         }
     }
 }

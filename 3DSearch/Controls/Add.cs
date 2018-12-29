@@ -118,12 +118,16 @@ namespace _3DSearch
                 label5.Visible = true;
                 textBoxDim2.Visible = true;
                 btnOneMoreDiam2.Location = new System.Drawing.Point(textBoxDim2.Size.Width + textBoxDim2.Location.X + 3, textBoxDim2.Location.Y);
+                buttonLocalSave.Location = new System.Drawing.Point(buttonLocalSave.Location.X, buttonLocalSave.Location.Y + textBoxDim2.Size.Height + 5);
+                buttonRepoSave.Location = new System.Drawing.Point(buttonRepoSave.Location.X, buttonRepoSave.Location.Y + textBoxDim2.Size.Height + 5);
             }
             else
             {
                 label6.Visible = true;
                 textBoxDim3.Visible = true;
                 btnOneMoreDiam2.Location = new System.Drawing.Point(textBoxDim3.Size.Width + textBoxDim3.Location.X + 3, textBoxDim3.Location.Y);
+                buttonLocalSave.Location = new System.Drawing.Point(buttonLocalSave.Location.X, buttonLocalSave.Location.Y + textBoxDim2.Size.Height + 10);
+                buttonRepoSave.Location = new System.Drawing.Point(buttonRepoSave.Location.X, buttonRepoSave.Location.Y + textBoxDim2.Size.Height + 10);
             }
         }
 

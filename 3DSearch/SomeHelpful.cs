@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using SolidWorks.Interop.sldworks;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace _3DSearch.Controls
 {
@@ -54,6 +54,24 @@ namespace _3DSearch.Controls
 
             return point;
         }
+
+        public static bool OpenLocal(string path)
+        {
+
+            SldWorks swApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application");
+
+            if (File.Exists(path))
+            {
+                swApp.OpenDoc(path, 1);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Файл не был найден локально!");
+                return false;
+            }
+        }
+
     }
 
     public class SizeM

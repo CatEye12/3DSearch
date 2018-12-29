@@ -1,12 +1,10 @@
 ﻿using _3DSearch.Controls;
-using SolidWorks.Interop.sldworks;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace _3DSearch
@@ -51,7 +49,7 @@ namespace _3DSearch
         
         public SearchModel()
         {
-        
+            
         }
 
         private SQLRepositoryDataContext dataSearch;
@@ -59,17 +57,54 @@ namespace _3DSearch
 
         public List<SearchModel> SearchSimilar()
         {
+            List<KindaRepository> select = new List<KindaRepository>();
 
-            List<SearchModel> showable;
 
             using (dataSearch = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
             {
-                showable = new List<SearchModel>();
+                select = dataSearch.KindaRepositories.ToList();
+            }
 
-                foreach (KindaRepository item in dataSearch.KindaRepositories)
+            return ConvertToVisible(select);
+        }
+
+
+        public List<SearchModel> SearchSimilar(int percents , SearchModel whatToSearch)
+        {
+            List<KindaRepository> firstSelect = new List<KindaRepository>(); //выборка по основным габаритным параметрам
+
+            firstSelect = DBSelectByMainFeatures(percents, whatToSearch);
+
+            if (whatToSearch.DimVal1 != 0 || whatToSearch.DimVal2 != 0 || whatToSearch.DimVal3 !=0)
+            {
+                firstSelect = DBSelectBySubFeatures(percents, whatToSearch, firstSelect);//значение переменной перезапишется
+            }            
+
+            return ConvertToVisible(firstSelect);
+        }
+
+        /// <summary>
+        /// Приводим выборку к другому тиму, чтоб пользователю не отображались не нужные данные из БД
+        /// </summary>
+        /// <param name="firstSelect"></param>
+        /// <returns></returns>
+        public List<SearchModel> ConvertToVisible(List<KindaRepository> firstSelect)
+        {
+            bool withFirstDim = false, withSecondDim = false, withThirdDim = false;
+            List<SearchModel> showableTable = new List<SearchModel>();
+
+            withFirstDim = firstSelect.Any(x => x.DimVal1 > 0);
+            if (withFirstDim)
+                withSecondDim = firstSelect.Any(x => x.DimVal2 > 0);
+            if (withSecondDim)
+                withThirdDim = firstSelect.Any(x => x.DimVal3 > 0);
+
+            if (withThirdDim)
+            {
+                foreach (KindaRepository item in firstSelect)
                 {
 
-                    showable.Add(new SearchModel()
+                    showableTable.Add(new SearchModel()
                     {
                         ID = item.Id,
                         Size1 = item.Size1,
@@ -78,44 +113,60 @@ namespace _3DSearch
                         DimVal1 = item.DimVal1,
                         DimVal2 = item.DimVal2,
                         DimVal3 = item.DimVal3,
-                        Local = item.Path == string.Empty ? false : true,
+                        Local = item.Path == string.Empty ? false : true
+                    });
+                }
+            }
+            else if (withSecondDim)
+            {
+                foreach (KindaRepository item in firstSelect)
+                {
+
+                    showableTable.Add(new SearchModel()
+                    {
+                        ID = item.Id,
+                        Size1 = item.Size1,
+                        Size2 = item.Size2,
+                        Size3 = item.Size3,
+                        DimVal1 = item.DimVal1,
+                        DimVal2 = item.DimVal2,
+                        Local = item.Path == string.Empty ? false : true
+                    });
+                }
+            }
+            else if (withFirstDim)
+            {
+                foreach (KindaRepository item in firstSelect)
+                {
+
+                    showableTable.Add(new SearchModel()
+                    {
+                        ID = item.Id,
+                        Size1 = item.Size1,
+                        Size2 = item.Size2,
+                        Size3 = item.Size3,
+                        DimVal1 = item.DimVal1,
+                        Local = item.Path == string.Empty ? false : true
+                    });
+                }
+            }
+            else
+            {
+                foreach (KindaRepository item in firstSelect)
+                {
+
+                    showableTable.Add(new SearchModel()
+                    {
+                        ID = item.Id,
+                        Size1 = item.Size1,
+                        Size2 = item.Size2,
+                        Size3 = item.Size3,
+                        Local = item.Path == string.Empty ? false : true
                     });
                 }
             }
 
-            return showable;
-        }
 
-
-        public List<SearchModel> SearchSimilar(int percents , SearchModel whatToSearch)
-        {
-            List<SearchModel> showableTable = new List<SearchModel>();
-
-            List<KindaRepository> firstSelect; //выборка по основным габаритным параметрам
-
-            firstSelect = DBSelectByMainFeatures(percents, whatToSearch);
-
-            if (whatToSearch.DimVal1 != 0 || whatToSearch.DimVal2 != 0 || whatToSearch.DimVal3 !=0)
-            {
-                firstSelect = DBSelectBySubFeatures(percents, whatToSearch, firstSelect);//значение переменной перезапишется
-            }
-
-
-            //чтоб пользователю не отображались не нужные данные из БД, приводим выборку к другому тиму
-            foreach (KindaRepository item in firstSelect)
-            {
-
-                showableTable.Add(new SearchModel()
-                {
-                    Size1 = item.Size1,
-                    Size2 = item.Size2,
-                    Size3 = item.Size3,
-                    DimVal1 = item.DimVal1,
-                    DimVal2 = item.DimVal2,
-                    DimVal3 = item.DimVal3,
-                    Local = item.Path == string.Empty ? false : true
-                });
-            }
 
             return showableTable;
         }
@@ -139,21 +190,28 @@ namespace _3DSearch
 
             using (dataSearch = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
             {
-                var table = dataSearch.KindaRepositories.ToList();
-
-                try
+                if (dataSearch != null)
                 {
-                    firstSelect = table.Where(
-                    x =>
-                    (Allowance(x.Size2, x.Size1) >= allowance1.LowerBound && Allowance(x.Size2, x.Size1) <= allowance1.UpperBound &&//поиск деталей соответствующим допустимому отклонению
-                     Allowance(x.Size3, x.Size2) >= allowance2.LowerBound && Allowance(x.Size3, x.Size2) <= allowance2.UpperBound
+                    var table = dataSearch.KindaRepositories.ToList();
 
-                  )).ToList();
+                    try
+                    {
+                        firstSelect = table.Where(
+                        x =>
+                        (Allowance(x.Size2, x.Size1) >= allowance1.LowerBound && Allowance(x.Size2, x.Size1) <= allowance1.UpperBound &&//поиск деталей соответствующим допустимому отклонению
+                         Allowance(x.Size3, x.Size2) >= allowance2.LowerBound && Allowance(x.Size3, x.Size2) <= allowance2.UpperBound
+
+                      )).ToList();
+                    }
+                    catch (Exception fail)
+                    {
+                        MessageBox.Show(fail.Message);
+                        throw fail;
+                    }
                 }
-                catch (Exception fail)
+                else
                 {
-                    MessageBox.Show(fail.Message);
-                    throw fail;
+                    System.Windows.Forms.MessageBox.Show("Не удалось установить подключение к базе даных. Проверте строку подключения и настройки сети!");
                 }
             }
 
@@ -262,10 +320,16 @@ namespace _3DSearch
             
             using (dataSearch = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
             {
+                if (dataSearch != null)
+                {
+                    var b = dataSearch.KindaRepositories.Where(x => x.Id == ID).Select(x => x.Model).First();
 
-               var b = dataSearch.KindaRepositories.Where(x => x.Id == ID).Select(x=>x.Model).First();
-               
-               bytes = b.ToArray();
+                    bytes = b.ToArray();
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Не удалось установить подключение к базе даных. Проверте строку подключения и настройки сети!");
+                }
             }
             return bytes;
         }
@@ -276,29 +340,18 @@ namespace _3DSearch
             string path = string.Empty;
 
 
-
             using (dataSearch = new SQLRepositoryDataContext(ConfigurationSettings.SQLConnection1))
             {
-
-                path = dataSearch.KindaRepositories.Where(x => x.Id == ID).Select(x => x.Path).First();
+                if (dataSearch != null)
+                {
+                    path = dataSearch.KindaRepositories.Where(x => x.Id == ID).Select(x => x.Path).First();
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Не удалось установить подключение к базе даных. Проверте строку подключения и настройки сети!");
+                }
             }
             return path;
-        }
-        public bool OpenLocal(string path)
-        {
-
-            SldWorks swApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application");
-
-            if (File.Exists(path))
-            {
-                swApp.OpenDoc(path, 1);
-                return true;
-            }
-            else
-            {
-                MessageBox.Show("Failed OpenLocal()");
-                return false;
-            }
         }
 
 
@@ -328,7 +381,7 @@ namespace _3DSearch
 
                 localPath = GetPathFromDB(wasSelected.ID);
 
-                if (!OpenLocal(localPath))
+                if (!SomeHelpful.OpenLocal(localPath))
                 {
                     GoToGetBytes(wasSelected.ID);
                 }
@@ -337,7 +390,7 @@ namespace _3DSearch
             {
                 GoToGetBytes(wasSelected.ID);
             }
+            
         }
-
     }
 }

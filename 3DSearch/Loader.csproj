@@ -76,6 +76,12 @@
     <Compile Include="Controls\Configuration.Designer.cs">
       <DependentUpon>Configuration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PartParams.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PartParams.Designer.cs">
+      <DependentUpon>PartParams.cs</DependentUpon>
+    </Compile>
     <Compile Include="SomeHelpful.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Properties\LittlePane.cs">
@@ -102,6 +108,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SearchFunctionality.cs" />
+    <Compile Include="SQLRepository.cs">
+      <DependentUpon>SQLRepository.dbml</DependentUpon>
+    </Compile>
     <Compile Include="SQLRepository.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -117,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Configuration.resx">
       <DependentUpon>Configuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PartParams.resx">
+      <DependentUpon>PartParams.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\LittlePane.resx">
       <DependentUpon>LittlePane.cs</DependentUpon>

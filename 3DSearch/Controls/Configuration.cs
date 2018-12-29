@@ -9,14 +9,11 @@ namespace _3DSearch
 
 
 
-
-
-
         public ConfigurationControl()
         {
             InitializeComponent();
             ConfigurationSettings.NewMethod();
-            //ConfigurationSettings.ReturnSettings(ref baseName, ref servName, ref userName, ref password, ref localPath);
+            ConfigurationSettings.ReturnSettings(ref baseName, ref servName, ref userName, ref password, ref localPath);
             FillFormWithDefault();
         }
 
