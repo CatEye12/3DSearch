@@ -22,6 +22,7 @@ namespace _3DSearch
             // Set-up add-in call back info
             bool result = SWApplication.SetAddinCallbackInfo(0, this, Cookie);
             this.UISetup();
+            
             return true;
         }
 
@@ -30,18 +31,20 @@ namespace _3DSearch
             this.UITeardown();
             return true;
         }
+
+        
         private void UITeardown()
         {
-
             mTaskpaneHost = null;
             mTaskpaneView.DeleteView();
             Marshal.ReleaseComObject(mTaskpaneView);
             mTaskpaneView = null;
-
         }
+
+
+
         private void UISetup()
         {
-
             try
             {
                 string imagePath;
@@ -75,6 +78,4 @@ namespace _3DSearch
             Microsoft.Win32.Registry.LocalMachine.DeleteSubKeyTree(keyPath);
         }
     }
-
-    
 }

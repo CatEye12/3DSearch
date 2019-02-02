@@ -15,6 +15,8 @@ namespace _3DSearch
         public static string LocalPath = string.Empty;
         public static string SQLConnection1 = string.Empty;
 
+        static string configExe;
+
 
         public ConfigurationSettings()
         {
@@ -23,28 +25,39 @@ namespace _3DSearch
 
         public static void NewMethod()
         {
-            string configExe = Environment.CurrentDirectory + "\\3DSearch.dll.config";
-
-            if (System.IO.File.Exists(configExe))
+            try
             {
-                ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
-                fileMap.ExeConfigFilename = configExe;
-                Configuration conf = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+                configExe = System.IO.Path.GetDirectoryName(typeof(LittlePane).Assembly.Location) + "\\3DSearch.dll.config";
 
-                SQLConnection1 = conf.ConnectionStrings.ConnectionStrings["_3DSearch.Properties.Settings.SQLConnection1"] == null ? string.Empty : conf.ConnectionStrings.ConnectionStrings["_3DSearch.Properties.Settings.SQLConnection1"].ToString();
+                if (System.IO.File.Exists(configExe))
+                {
+                    ExeConfigurationFileMap fileMap = new ExeConfigurationFileMap();
+                    fileMap.ExeConfigFilename = configExe;
+                    Configuration conf = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-                ClientSettingsSection localPathSect = (ClientSettingsSection)conf.SectionGroups["applicationSettings"].Sections["_3DSearch.Properties.Settings"];
-                LocalPath = localPathSect.Settings.Get("LocalPath").Value.ValueXml.InnerText;
+                    SQLConnection1 = conf.ConnectionStrings.ConnectionStrings["_3DSearch.Properties.Settings.SQLConnection1"] == null ? string.Empty : conf.ConnectionStrings.ConnectionStrings["_3DSearch.Properties.Settings.SQLConnection1"].ToString();
+
+                    ClientSettingsSection localPathSect = (ClientSettingsSection)conf.SectionGroups["applicationSettings"].Sections["_3DSearch.Properties.Settings"];
+                    LocalPath = localPathSect.Settings.Get("LocalPath").Value.ValueXml.InnerText;
+                    System.Windows.Forms.MessageBox.Show(SQLConnection1 + "\n" + LocalPath);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("NewMethod  " + e.Message);
+                throw e;
             }
         }
 
         public void UpdateConfigurationString()
         {
-            string s = @"Data Source =" + ConfigurationSettings.ServName + "; Initial Catalog =" + ConfigurationSettings.BaseName + "; User ID =" + ConfigurationSettings.UserName + "; Password =" + ConfigurationSettings.Password + "; TrustServerCertificate = True";
 
-            string configExe = Environment.CurrentDirectory + "\\3DSearch.dll.config";
+
+            string s = @"Data Source =" + ConfigurationSettings.ServName + "; Initial Catalog =" + ConfigurationSettings.BaseName + "; User ID =" + ConfigurationSettings.UserName + "; Password =" + ConfigurationSettings.Password + "; TrustServerCertificate = True";
+            
             try
             {
+                configExe = System.IO.Path.GetDirectoryName(typeof(LittlePane).Assembly.Location) + "\\3DSearch.dll.config";
 
                 if (System.IO.File.Exists(configExe))
                 {
@@ -60,68 +73,90 @@ namespace _3DSearch
                     conf.Save(ConfigurationSaveMode.Full);
 
                     NewMethod();
-
                 }
             }
             catch (ConfigurationErrorsException ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.BareMessage);
+                System.Windows.Forms.MessageBox.Show("UpdateConfigurationString  " + ex.BareMessage);
+                throw ex;
             }
         }
 
 
         public static void ReturnSettings(ref string baseName, ref string servName, ref string userName, ref string password, ref string localPath)
         {
-
-            string conString = ConfigurationSettings.SQLConnection1;
-            if (conString != null)
+            try
             {
-                string[] parced = conString.Split(';');
+                string conString = ConfigurationSettings.SQLConnection1;
+                if (conString != null)
+                {
+                    string[] parced = conString.Split(';');
+
+                    if (parced.Length > 3)
+                    {
+                        baseName = parced[0].Split('=')[1];
+                        if (baseName.Contains(" ")) { baseName.Replace(' ', (char)0); }
+
+                        servName = parced[1].Split('=')[1];
+                        if (servName.Contains(" ")) { servName.Replace(' ', (char)0); }
 
 
-                baseName = parced[0].Split('=')[1];
-                    if (baseName.Contains(" ")) { baseName.Replace(' ', (char)0); }
+                        userName = parced[2].Split('=')[1];
+                        if (userName.Contains(" ")) { userName.Replace(' ', (char)0); }
 
-                servName = parced[1].Split('=')[1];
-                    if (servName.Contains(" ")) { servName.Replace(' ', (char)0); }
-
-
-                userName = parced[2].Split('=')[1];
-                    if (userName.Contains(" ")) { userName.Replace(' ', (char)0); }
-
-                password = parced[3].Split('=')[1];
-                    if (password.Contains(" ")) { password.Replace(' ', (char)0); }
-
-                localPath = ConfigurationSettings.LocalPath;
+                        password = parced[3].Split('=')[1];
+                        if (password.Contains(" ")) { password.Replace(' ', (char)0); }
+                    }
+                    localPath = ConfigurationSettings.LocalPath;
                     if (localPath.Contains(" ")) { localPath.Replace(' ', (char)0); }
+                }
             }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("ReturnSettings  " + e.Message);
+                throw e ;
+            }
+            
         }
 
         public static bool IsServerConnected()
         {
-            using (var l_oConnection = new SqlConnection(ConfigurationSettings.SQLConnection1))
+            try
             {
-                if (l_oConnection != null)
+                SqlConnection kk = new SqlConnection();
+                
+                using (SqlConnection l_oConnection = new SqlConnection(ConfigurationSettings.SQLConnection1))
                 {
-                    try
+                    
+                    if (l_oConnection != null)
                     {
-                        l_oConnection.Open();
-                        return true;
+                        try
+                        {
+                            l_oConnection.Open();
+                            return true;
+                        }
+                        catch (SqlException ex)
+                        {
+                            SqlConnection.ClearPool(l_oConnection);
+                            return false;
+                        }
+                        finally
+                        {
+                            l_oConnection.Dispose();
+                        }
                     }
-                    catch (SqlException ex)
+                    else
                     {
+                        System.Windows.Forms.MessageBox.Show("Не удалось получить доступ к базе данных. Проверте строку подключения и сетевые настройки");
                         return false;
                     }
-                    finally
-                    {
-                        l_oConnection.Dispose();
-                    }
                 }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("Не удалось получить доступ к базе данных. Проверте строку подключения и сетевые настройки");
-                    return false;
-                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("IsServerConnected  " + e.Message);
+
+                throw e;
             }
         }
     }

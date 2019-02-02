@@ -21,6 +21,7 @@ namespace _3DSearch
         {
             get
             {
+                MessageBox.Show("get ");
                 if (littleInstance == null)
                 {
                    
@@ -37,6 +38,7 @@ namespace _3DSearch
 
         public LittlePane()
         {
+
             InitializeComponent();
             this.Dock = DockStyle.Fill;
             this.BackColor = Color.Bisque;

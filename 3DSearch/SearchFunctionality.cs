@@ -79,7 +79,7 @@ namespace _3DSearch
             {
                 firstSelect = DBSelectBySubFeatures(percents, whatToSearch, firstSelect);//значение переменной перезапишется
             }            
-
+            
             return ConvertToVisible(firstSelect);
         }
 
@@ -288,12 +288,11 @@ namespace _3DSearch
 
         private static decimal Percents(int p)
         {
-            return 100 - p;
+            return (100 - p)/100m;
         }
         private static decimal Allowance(decimal p1, decimal p2)
         {
-
-            return Math.Round((p1 / p2) * 100, 3);
+            return Math.Round((p1 / p2), 3);
         }
 
         public void OpenModelFromDB(byte[] bytes, string newName)

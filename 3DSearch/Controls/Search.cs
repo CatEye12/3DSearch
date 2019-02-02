@@ -85,17 +85,19 @@ namespace _3DSearch
             dataGridViewSearchResult.DataSource = fillTable;
             dataGridViewSearchResult.Columns[0].Visible = false;
 
-            dataGridViewSearchResult.Height = ResizeDataGridView();
+            //dataGridViewSearchResult.Height = ResizeDataGridView();
         }
 
         private int ResizeDataGridView()
         {
             int quantity = dataGridViewSearchResult.Rows.Count;
-            int rowHeight =  dataGridViewSearchResult.Rows.GetRowsHeight(DataGridViewElementStates.Displayed);
+            int rowHeight =  dataGridViewSearchResult.Rows.GetRowsHeight(DataGridViewElementStates.None);
+
+           
 
             if (quantity < 1) return dataGridViewSearchResult.ColumnHeadersHeight;
 
-            return quantity * rowHeight + dataGridViewSearchResult.ColumnHeadersHeight+10;
+            return rowHeight + dataGridViewSearchResult.ColumnHeadersHeight;
         }
 
 
